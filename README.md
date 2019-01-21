@@ -1,2 +1,2 @@
 # go-blockchain
-A blockchain implimentation in Golang
+A blockchain implementation in Golang
