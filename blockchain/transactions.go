@@ -62,7 +62,7 @@ func NewTransaction(from, to string, amount int, chain *BlockChain) *Transaction
 	acc, validOutputs := chain.FindSpendableOutputs(from, amount)
 
 	if acc < amount {
-		log.Panic("Error: not enough funds")
+		log.Panicf("Error: not enough funds. \t %s has only %d", from, acc )
 	}
 
 	for txid, outs := range validOutputs {
