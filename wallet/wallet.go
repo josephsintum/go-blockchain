@@ -37,7 +37,7 @@ func (w Wallet) Address() []byte {
 	return address
 }
 
-func NewKeyPair(ecdsa.PrivateKey, []byte) (ecdsa.PrivateKey, []byte) {
+func NewKeyPair() (ecdsa.PrivateKey, []byte) {
 	curve := elliptic.P256()
 
 	private, err := ecdsa.GenerateKey(curve, rand.Reader)
