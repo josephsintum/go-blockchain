@@ -1,8 +1,6 @@
 package blockchain
 
 import (
-	"strings"
-	"github.com/josephsintum/go-blockchain/wallet"
 	"bytes"
 	"crypto/ecdsa"
 	"crypto/elliptic"
@@ -13,6 +11,9 @@ import (
 	"fmt"
 	"log"
 	"math/big"
+	"strings"
+
+	"github.com/josephsintum/go-blockchain/wallet"
 )
 
 type Transaction struct {
@@ -23,12 +24,12 @@ type Transaction struct {
 
 func (tx *Transaction) Hash() []byte {
 	var hash [32]byte
-	
+
 	txCopy := *tx
 	txCopy.ID = []byte{}
-	
+
 	hash = sha256.Sum256(txCopy.Serialize())
-	
+
 	return hash[:]
 }
 
@@ -193,11 +194,11 @@ func (tx *Transaction) Verify(prevTXs map[string]Transaction) bool {
 		keyLen := len(in.PubKey)
 		x.SetBytes(in.PubKey[:(keyLen / 2)])
 		y.SetBytes(in.PubKey[(keyLen / 2):])
-	}
 
-	rawPubKey := ecdsa.PublicKey{curve, &x, &y}
-	if ecdsa.Verify(&rawPubKey, txCopy.ID, &r, &s) == false {
-		return false
+		rawPubKey := ecdsa.PublicKey{curve, &x, &y}
+		if ecdsa.Verify(&rawPubKey, txCopy.ID, &r, &s) == false {
+			return false
+		}
 	}
 
 	return true
